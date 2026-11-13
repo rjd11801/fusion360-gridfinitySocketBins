@@ -1,0 +1,15 @@
+# Socket list for SocketBin and SocketBinHoles. Columns: label, hole_diameter_mm, hole_depth_mm, row (optional: 1 = front row; blank = auto).
+# All sizes in mm. hole_diameter_mm = measured socket OD + about 0.5 mm clearance. Lines starting with # are ignored.
+# EXAMPLE VALUES ONLY (samples for SAE 1/4 in drive sockets). Measure your own.
+# name: SAE 1-4 Drive (EXAMPLE)
+label,hole_diameter_mm,hole_depth_mm,row
+5/32,10.5,22,1
+3/16,11.0,22,1
+7/32,11.5,22,1
+1/4,12.0,22,1
+9/32,12.5,22,1
+5/16,13.5,22,2
+11/32,14.5,22,2
+3/8,15.5,22,2
+7/16,17.5,22,2
+1/2,19.5,22,2

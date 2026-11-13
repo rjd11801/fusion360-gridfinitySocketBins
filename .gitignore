@@ -1,0 +1,9 @@
+# Python
+__pycache__/
+*.pyc
+
+# Dialog values the scripts remember next to the installed script
+socketbin_settings.json
+
+# Installer backup copies
+*.before-*

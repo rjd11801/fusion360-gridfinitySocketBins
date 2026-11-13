@@ -1,0 +1,20 @@
+SocketBin 1.3.0 - START HERE
+===========================
+
+SocketBin is a Fusion 360 script that builds a Gridfinity socket bin from a list of your sockets
+and exports a two-colour 3MF for Orca Slicer / Snapmaker Orca.
+
+1. INSTALL
+   Windows: double-click Install-SocketBin.bat  (no admin rights needed)
+   Mac:     double-click install.command  (if it will not run: Terminal, chmod +x install.command)
+   Manual:  Fusion 360 > Shift+S > Scripts tab > green + > choose the SocketBin folder in this package
+
+2. MAKE YOUR LIST
+   Open Starter Files\sockets-template.xlsx (or .csv), type your sockets, save. Columns:
+   label, hole_diameter_mm, hole_depth_mm, row (optional). See the User Guide for how to measure.
+   Starter Files\examples has sample lists with EXAMPLE values (measure your own sockets).
+
+3. RUN
+   Fusion 360 > Shift+S > Scripts > SocketBin > Run, choose your file, press "Plan bin...", then Yes.
+
+Read "SocketBin User Guide.pdf" (also .md and .html) for every option and for troubleshooting.

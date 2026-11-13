@@ -1,0 +1,96 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>SocketBinHoles User Guide</title><style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;max-width:900px;margin:2em auto;padding:0 1em;color:#222;line-height:1.5}
+h1{border-bottom:2px solid #2b6cb0;padding-bottom:.2em;margin-top:1.6em;color:#1a365d}h2{color:#2b6cb0}
+table{border-collapse:collapse;width:100%;margin:1em 0;font-size:.92em}th,td{border:1px solid #ccc;padding:6px 8px;vertical-align:top;text-align:left}th{background:#edf2f7}
+pre{background:#f4f4f4;padding:10px;border-radius:4px;overflow:auto}.note{background:#fffbea;border-left:4px solid #d69e2e;padding:8px 12px;margin:1em 0}
+.sub{color:#555;font-style:italic}</style></head><body>
+<h1 style="border:0;font-size:2.2em">SocketBinHoles User Guide</h1><p class="sub">Version 1.1.0  -  a Fusion 360 script that cuts socket pockets and labels into a bin you already have</p>
+<h1>1. What SocketBinHoles does</h1>
+<p>SocketBinHoles adds socket pockets and flush label inlays to a bin that is already open in Fusion 360: for example a solid Gridfinity blank you modelled or imported from a STEP file. You open the bin, click its large flat top face, pick your sockets list (.xlsx or .csv), and the script lays out the pockets, cuts them into that one body, and inlays a label in front of each pocket. It never creates a new bin, feet or an outer shape; the bin you selected is the only body that is cut.</p>
+<ul><li>Fits the pockets into the exact top area of your blank (minus a small inset you choose), using adaptive walls: 2.85 mm between pockets when there is room, thinning to 1.2 mm between pockets and 1.5 mm at the outer edge only when needed.</li><li>Uses your hole diameters and depths exactly. A pocket that is too deep for the blank is rejected with a clear message; nothing is silently shortened.</li><li>Inlays a 5 mm bold label 2 mm in front of each pocket, 1 mm deep and flush with the top, as separate white label bodies.</li><li>Optionally inlays a thin disk (default 0.6 mm) in each pocket bottom as a separate body, so it can be printed in the label color without changing the seat depth.</li><li>Checks before cutting that every pocket is inside solid material (it will not break into a hollow bin or through a wall).</li><li>If something goes wrong part-way, it tries to undo only what that run created.</li></ul>
+<h2>SocketBinHoles or SocketBin?</h2>
+<table><tr><th></th><th>SocketBin</th><th>SocketBinHoles</th></tr>
+<tr><td>Starting point</td><td>A sockets list only</td><td>An existing bin design in Fusion plus a sockets list</td></tr>
+<tr><td>Bin shape</td><td>Generated for you (Gridfinity, 42 mm pitch, feet, rounded corners)</td><td>Whatever you open; feet and exterior are left exactly as they are</td></tr>
+<tr><td>Size</td><td>Auto-chooses the smallest Gridfinity footprint</td><td>Fixed by your blank; the list must fit it</td></tr>
+<tr><td>Export</td><td>Writes a 3MF and build report</td><td>No automatic export; you export the bodies yourself</td></tr>
+</table>
+<p>The two scripts are independent. They install into separate folders and can be installed side by side.</p>
+<h1>2. Requirements</h1>
+<ul><li>Autodesk Fusion 360 (Windows or macOS). Scripts run in Fusion&#x27;s own Python, so you do not install Python.</li><li>A SOLID bin or blank design: not a hollow, open storage bin and not a mesh or surface body. The cuts need material to cut into.</li><li>The bin&#x27;s top face must be flat, face up (+Z), and be the highest surface of the body (no raised stacking lip). The body should be aligned to its component&#x27;s XY axes.</li><li>A sockets list in .xlsx or .csv (see section 7). Starter files are in the Starter Files folder.</li><li>A multi-color printer is optional; a single-color printer simply prints the labels in the bin color.</li></ul>
+<div class="note"><b>Note:</b> Tested by its author on Windows with Fusion 360. The macOS installer follows Fusion&#x27;s standard script folder but has not been tested on a Mac by the author. Always run it on a saved COPY of your design first, and check the first print.</div>
+<h1>3. Installing</h1>
+<h2>Windows (easiest)</h2>
+<ol><li>Unzip SocketBinHoles-1.1.0.zip anywhere.</li><li>Double-click Install-SocketBinHoles.bat. No administrator rights are needed.</li><li>It copies the SocketBinHoles folder to  %APPDATA%\Autodesk\Autodesk Fusion 360\API\Scripts\SocketBinHoles . An older copy is backed up first to  %APPDATA%\Autodesk\Autodesk Fusion 360\API\SocketBinHoles-backups .</li><li>If Fusion is open, close and reopen the Scripts and Add-Ins window (or restart Fusion).</li></ol>
+<h2>macOS</h2>
+<ol><li>Unzip SocketBinHoles-1.1.0.zip.</li><li>If double-clicking install.command says it cannot be opened, open Terminal, type  chmod +x  and a space, drag install.command into the window, and press Return.</li><li>Double-click install.command (if macOS blocks it, right-click it, choose Open, then Open again). It copies the script to  ~/Library/Application Support/Autodesk/Autodesk Fusion 360/API/Scripts/SocketBinHoles .</li></ol>
+<h2>Manual install</h2>
+<ol><li>In Fusion press Shift+S (Utilities &gt; Add-Ins &gt; Scripts and Add-Ins).</li><li>On the Scripts tab click the green + next to My Scripts and choose the SocketBinHoles folder from this package (the folder that contains SocketBinHoles.py).</li><li>Or copy that folder yourself into Fusion&#x27;s Scripts folder (paths above). Keep all its files together.</li></ol>
+<h2>Side by side with SocketBin</h2>
+<p>SocketBin and SocketBinHoles use separate folders and each loads its own socketbin_core.py file, so installing, updating or removing one never affects the other.</p>
+<h2>Updating and uninstalling</h2>
+<p>Run the installer from a newer package to update. To uninstall run Uninstall-SocketBinHoles.bat (Windows) or uninstall.command (macOS), or delete the SocketBinHoles folder from the Scripts folder. Your designs are not touched.</p>
+<h1>4. First run walkthrough</h1>
+<ol><li>Open the bin design in Fusion 360 (or import your STEP file). Save a copy first and run the script on the copy.</li><li>Press Shift+S, choose SocketBinHoles on the Scripts tab and click Run.</li><li>Read the first message and click OK. Then click the large flat TOP face of the bin. (If the bin is inside an assembly, clicking the face selects that component&#x27;s body; edits apply to that component&#x27;s original body and therefore to all its instances.)</li><li>The script checks the selection: it must be a solid body, the top must face +Z and be the highest surface of the body.</li><li>First input box: the measured size of the body is shown. Enter three values separated by commas: top inset, base-region height, minimum floor, in mm. Default 1,5,3 (explained in section 5).</li><li>Second input box: pocket-floor disk thickness in mm. Default 0.6. Enter 0 to skip the colored floors.</li><li>Choose your sockets .xlsx or .csv file.</li><li>A plan window lists the number of sockets and rows, the measured body size, the deepest hole, the floor left above the base, each row&#x27;s wall thickness and any warnings. Choose Yes to cut, or No to stop without any change.</li><li>The script checks every pocket against the solid body, then cuts the pockets, the label pockets and the optional floor recesses, and creates the white label and floor bodies.</li><li>A final message reports how many pocket floors were expected, created and colored, how many holes and label solids were made, and any warnings. Save the result as a NEW design.</li></ol>
+<h1>5. The inputs, one by one</h1>
+<table><tr><th>Input</th><th>Default</th><th>What it does</th></tr>
+<tr><td>Top face</td><td>(you click it)</td><td>The large flat top face of the solid bin. It defines the surface the pockets are cut down from. The face must be planar, face +Z and be the highest part of the body (no stacking lip).</td></tr>
+<tr><td>Top inset (first value)</td><td>1 mm</td><td>Keeps the pockets this far in from every edge of the top face, as a safety margin for chamfers and side walls. The usable area is the body size minus twice this inset. Raise it for thick walls or large edge chamfers. It is not automatic wall detection.</td></tr>
+<tr><td>Base-region height (second value)</td><td>5 mm</td><td>The height at the bottom of the bin treated as base (feet). Pockets never go into this region. 5 mm is the Gridfinity foot height; check your model.</td></tr>
+<tr><td>Minimum floor (third value)</td><td>3 mm</td><td>Material kept above the base region under the deepest pocket. Maximum safe pocket depth = body height - base height - minimum floor (32 mm for a 40 mm tall bin with 5 and 3).</td></tr>
+<tr><td>Pocket-floor disk thickness</td><td>0.6 mm</td><td>A separate disk recessed into the bottom of each pocket, for printing in the label color. 0 = off. It is limited so at least 0.8 mm of original material stays above the base region; a very thin floor setting turns it off with a warning. The pocket seat depth does not change.</td></tr>
+<tr><td>Sockets file</td><td>(you choose)</td><td>.xlsx or .csv, see section 7.</td></tr>
+</table>
+<p>The script rotates the layout automatically: the long side of the bin becomes the row direction. Sockets with a row number go in that row (row 1 is the front); others are packed automatically. Sockets stay in file order left to right within a row.</p>
+<h1>6. How the layout and checks work</h1>
+<ul><li>Usable area = body length and width minus twice the top inset. The exact measured size is used (it is not rounded to Gridfinity cells).</li><li>Walls: each row keeps a 2.85 mm wall between pockets when there is room. Only if needed does it thin the walls, never below 1.2 mm between pockets and never below 1.5 mm between a pocket and the edge of the usable area (so at least 2.5 mm from the outside of the blank with the default inset).</li><li>If a row does not fit, a message says which row, how long it needs to be, and what size blank would work. Nothing is changed.</li><li>Depth: if any pocket is deeper than the safe depth, the script stops with a message showing the maximum safe depth and the overall height that would be required. No depths are shortened.</li><li>Solid-blank check: before any change, each pocket (including the floor-disk recess) is tested against a temporary copy of the body. If a pocket would hit a hollow area or break through the outside, the script stops and names the socket.</li><li>Labels are bold Arial, calibrated to about 5 mm actual letter height, inlaid 1 mm flush with the top, 2 mm in front of each pocket.</li></ul>
+<h1>7. Your sockets file</h1>
+<p>The first row must be a header row. Column names (not case sensitive; underscores, no spaces):</p>
+<table><tr><th>Column</th><th>Required</th><th>Meaning</th></tr>
+<tr><td>label</td><td>yes</td><td>Text inlaid in front of the pocket, such as 10 or 5/16 or 3/8. Keep it short (about 4 characters).</td></tr>
+<tr><td>hole_diameter_mm</td><td>yes</td><td>Pocket diameter in millimetres: measured socket outside diameter + about 0.5 mm clearance. Also accepted: diameter, hole_diameter, diameter_mm.</td></tr>
+<tr><td>hole_depth_mm</td><td>yes</td><td>Pocket depth in millimetres. Also accepted: depth, hole_depth, depth_mm.</td></tr>
+<tr><td>row</td><td>no</td><td>1 = front row, 2 = the row behind it, and so on. Blank = packed automatically. Also accepted: row_hint.</td></tr>
+</table>
+<ul><li>A row whose label is  # name: My Bin  sets a bin name (SocketBinHoles does not need it). Any row whose label starts with # is ignored, so you can add notes.</li><li>In .xlsx files only the first worksheet is read. CSV files must be plain UTF-8 text with commas and a dot for decimals.</li><li>Measure the socket&#x27;s widest outside diameter with calipers and add 0.4 to 0.6 mm clearance. Measure depth from the open end to where the socket should rest. Print a test first.</li><li>The pockets can be at most the safe depth (section 5). With the defaults and a 40 mm tall bin that is 32 mm.</li></ul>
+<div class="note"><b>Note:</b> The files in Starter Files &gt; examples contain EXAMPLE values only. Socket sizes differ between brands and styles; measure your own sockets.</div>
+<h2>Which blank do the example lists fit?</h2>
+<p>With the default 1 mm inset and a 40 mm tall bin (5 mm base, 3 mm floor), these are the smallest Gridfinity blanks (cells long x cells deep) that SocketBinHoles&#x27; planner fits each starter list into. They were checked with the planner itself.</p>
+<table><tr><th>Starter file</th><th>Sockets</th><th>Smallest blank that fits</th></tr>
+<tr><td>EXAMPLE-SAE-1-4in-drive.xlsx</td><td>10</td><td>3 x 2 cells (125.5 x 83.5 mm)</td></tr>
+<tr><td>EXAMPLE-metric-3-8in-drive-shallow-10-19mm.xlsx</td><td>10</td><td>6 x 1 cells (251.5 x 41.5 mm)</td></tr>
+<tr><td>EXAMPLE-two-rows-shallow-and-deep.xlsx</td><td>20</td><td>5 x 2 cells (209.5 x 83.5 mm)</td></tr>
+<tr><td>sockets-template.xlsx</td><td>2</td><td>2 x 1 cells (83.5 x 41.5 mm)</td></tr>
+</table>
+<h1>8. What you get</h1>
+<ul><li>Pockets: one sketch per socket (named Socket hole &lt;label&gt;) and one cut feature per socket (named Socket &lt;label&gt; D&lt;diameter&gt; depth&lt;depth&gt;) in the bin&#x27;s component. To change a hole later, edit its sketch (position, diameter) or its extrusion feature (depth).</li><li>Labels: separate white bodies named Labels, Labels 02, ... (letters can be several solids, which is normal) and matching 1 mm label pockets cut into the bin. The bin keeps its own appearance.</li><li>Pocket floors (if enabled): separate bodies named Socket floor NN &lt;id&gt;, recessed into the pocket bottoms.</li><li>Label and floor bodies are put in a component named Labels when Fusion allows it. In single-component Part Design documents they stay as separate named bodies in the same component. Either way they get the same white appearance.</li><li>A construction plane (SocketBinHoles - top) at the top face. No files are written and nothing is saved automatically.</li></ul>
+<h2>Printing in several colors</h2>
+<ol><li>Save the result as a new design.</li><li>Select the original bin body AND every Labels and Socket floor body, and export them together as one multi-part 3MF (File &gt; Export, 3MF). Keep their common positions; do not arrange the letters separately.</li><li>In Orca Slicer / Snapmaker Orca assign the bin to the main filament and all Labels and Socket floor parts to the label filament.</li><li>Use 0.2 mm layers or finer and at least 3 wall loops with a 0.4 mm nozzle (walls can be 1.2 mm).</li></ol>
+<h1>9. Troubleshooting</h1>
+<table><tr><th>Message / problem</th><th>What to do</th></tr>
+<tr><td>SocketBinHoles is not listed in Scripts and Add-Ins</td><td>The folder must be named SocketBinHoles and contain SocketBinHoles.py and SocketBinHoles.manifest side by side. Reopen the Scripts and Add-Ins window or restart Fusion, or add the folder with the green +.</td></tr>
+<tr><td>&quot;Top must face component +Z&quot;</td><td>Align the bin so its top points up in its component, or activate that component, in a saved copy and try again.</td></tr>
+<tr><td>&quot;Selected face is not the highest top surface&quot;</td><td>Choose the topmost flat face. Bins with a raised stacking lip are not supported; use a flat solid blank.</td></tr>
+<tr><td>&quot;Select a solid BRep body&quot;</td><td>The selected body is a mesh or surface. Convert it to a solid first.</td></tr>
+<tr><td>&quot;These sockets don&#x27;t fit on a ... mm rail&quot;</td><td>The message names the row that is too long and the rail length needed. Use a bigger blank, reduce the top inset, move a socket to another row with the row column, or split the list.</td></tr>
+<tr><td>&quot;Bin too short: maximum safe depth ...&quot;</td><td>A pocket is deeper than body height - base height - minimum floor. Use a taller blank, reduce the minimum floor, or shorten the depth in your list. Nothing is cut.</td></tr>
+<tr><td>&quot;Hole ... intersects a cavity or exterior&quot;</td><td>The pocket would hit a hollow area or break through a wall. Use a solid blank, increase the top inset, or change the list. Nothing was cut.</td></tr>
+<tr><td>Run failed at &lt;stage&gt; with a traceback</td><td>The script tries to delete only what that run created. If it says rollback is incomplete, close WITHOUT saving and reopen your saved copy. Send the full message to the person who gave you the script.</td></tr>
+<tr><td>&quot;Pocket floors: N expected / M created&quot; shows a WARNING</td><td>Some floor disks failed; the listed warnings say which. The bin and the other floors are fine. Rerun on a fresh copy if you need all of them.</td></tr>
+<tr><td>Labels are not white or are missing a color</td><td>Check the Labels and Socket floor bodies in the browser; the final message lists appearance warnings.</td></tr>
+<tr><td>Instances of the component also changed</td><td>A component used several times shares one body, so every instance changes. Make the component independent first if you do not want that.</td></tr>
+</table>
+<h1>10. Limits</h1>
+<ul><li>For a solid Gridfinity-style blank only; it does not fill cavities, cap an open bin or change the footprint.</li><li>The label calibration assumes Arial Bold; font substitution may differ slightly between computers.</li><li>Planning is from the file at run time; there is no live link to the spreadsheet.</li><li>Not print-tested by the author on every Fusion version. Test on a copy and check your first print.</li></ul>
+<h1>11. Uninstalling</h1>
+<ul><li>Windows: run Uninstall-SocketBinHoles.bat. macOS: run uninstall.command. Or delete the SocketBinHoles folder from the Scripts folder.</li><li>Backups of earlier installs are in API/SocketBinHoles-backups and can be deleted.</li><li>Designs you already changed are not affected.</li></ul>
+<h1>12. Files in this package</h1>
+<table><tr><th>File</th><th>What it is</th></tr>
+<tr><td>SocketBinHoles/</td><td>The Fusion script folder: SocketBinHoles.py (dialogs and Fusion operations), holes_layout.py (fits your list to the blank), socketbin_core.py (reads the list, planner), SocketBinHoles.manifest, README.md, CHANGELOG.md.</td></tr>
+<tr><td>Install-SocketBinHoles.bat / .ps1</td><td>Windows installer. Optional -Target &lt;folder&gt; installs elsewhere (for testing).</td></tr>
+<tr><td>Uninstall-SocketBinHoles.bat / .ps1</td><td>Windows uninstaller.</td></tr>
+<tr><td>install.command / uninstall.command</td><td>macOS installer and uninstaller.</td></tr>
+<tr><td>Starter Files/</td><td>sockets-template.xlsx and .csv and examples/ with sample lists.</td></tr>
+<tr><td>SocketBinHoles User Guide (.pdf / .md / .html)</td><td>This guide.</td></tr>
+</table>
+<p>Provided as is, without warranty. Fusion 360 and Autodesk are trademarks of Autodesk, Inc. Gridfinity is a modular storage system designed by Zack Freedman.</p>
+</body></html>

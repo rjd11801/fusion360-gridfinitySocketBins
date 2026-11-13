@@ -1,0 +1,11 @@
+{
+	"autodeskProduct": "Fusion360",
+	"type": "script",
+	"author": "SocketBin",
+	"description": {
+		"": "Builds a Gridfinity socket bin (pockets + inlaid two-colour labels) from a socket list .xlsx or .csv, and optionally exports a 2-colour 3MF for Orca Slicer / Snapmaker Orca."
+	},
+	"version": "1.3.0",
+	"supportedOS": "windows|mac",
+	"editEnabled": true
+}

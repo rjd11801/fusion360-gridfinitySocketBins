@@ -1,0 +1,7 @@
+# Socket list for SocketBin and SocketBinHoles. Columns: label, hole_diameter_mm, hole_depth_mm, row (optional: 1 = front row; blank = auto).
+# All sizes in mm. hole_diameter_mm = measured socket OD + about 0.5 mm clearance. Lines starting with # are ignored.
+# The two rows below (10 and 11) are EXAMPLE values: replace them with your own measured sockets.
+# name: My Socket Bin
+label,hole_diameter_mm,hole_depth_mm,row
+10,17.5,20,
+11,18.5,20,

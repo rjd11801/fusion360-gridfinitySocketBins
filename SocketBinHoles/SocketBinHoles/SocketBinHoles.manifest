@@ -1,0 +1,11 @@
+{
+	"autodeskProduct": "Fusion360",
+	"type": "script",
+	"author": "SocketBin",
+	"description": {
+		"": "Add spreadsheet socket holes and flush white label inlays to an existing Gridfinity solid blank; preserve original feet. Adaptive walls, 1.5 mm min outer wall."
+	},
+	"supportedOS": "windows|mac",
+	"version": "1.1.0",
+	"runOnStartup": false
+}

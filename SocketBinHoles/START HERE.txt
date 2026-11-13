@@ -1,0 +1,22 @@
+SocketBinHoles 1.1.0 - START HERE
+================================
+
+SocketBinHoles is a Fusion 360 script that cuts socket pockets and flush labels into a bin you already
+have open (a solid Gridfinity blank). It does not create a new bin; use SocketBin for that.
+
+1. INSTALL
+   Windows: double-click Install-SocketBinHoles.bat  (no admin rights needed)
+   Mac:     double-click install.command  (if it will not run: Terminal, chmod +x install.command)
+   Manual:  Fusion 360 > Shift+S > Scripts tab > green + > choose the SocketBinHoles folder
+   It installs next to SocketBin (if you have it) without affecting it.
+
+2. MAKE YOUR LIST
+   Open Starter Files\sockets-template.xlsx (or .csv), type your sockets, save. Columns:
+   label, hole_diameter_mm, hole_depth_mm, row (optional).
+   Starter Files\examples has sample lists with EXAMPLE values (measure your own sockets).
+
+3. RUN (on a saved COPY of your design)
+   Open the bin, Fusion 360 > Shift+S > Scripts > SocketBinHoles > Run, click the large flat top face,
+   follow the prompts, review the plan, then Yes.
+
+Read "SocketBinHoles User Guide.pdf" (also .md and .html) for every input and for troubleshooting.

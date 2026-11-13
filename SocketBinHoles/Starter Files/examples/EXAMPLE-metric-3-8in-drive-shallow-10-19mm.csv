@@ -1,0 +1,15 @@
+# Socket list for SocketBin and SocketBinHoles. Columns: label, hole_diameter_mm, hole_depth_mm, row (optional: 1 = front row; blank = auto).
+# All sizes in mm. hole_diameter_mm = measured socket OD + about 0.5 mm clearance. Lines starting with # are ignored.
+# EXAMPLE VALUES ONLY (typical-looking samples for 3/8 in drive shallow metric sockets). Measure your own.
+# name: Metric 3-8 Drive Shallow (EXAMPLE)
+label,hole_diameter_mm,hole_depth_mm,row
+10,17.0,20,
+11,18.0,20,
+12,19.0,20,
+13,20.0,20,
+14,21.5,20,
+15,22.5,20,
+16,23.5,20,
+17,24.5,20,
+18,26.0,20,
+19,27.0,20,
