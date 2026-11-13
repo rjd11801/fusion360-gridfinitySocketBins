@@ -31,7 +31,7 @@ Each package also has a short `START HERE.txt`.
 
 Print a gauge, drop the socket (or a bit or dowel) into the holes, and use the snug diameter as `hole_diameter_mm`. The plates are 206 × 206 × 10 mm and cover Ø6–60 mm in 0.5 mm steps: one v12 plate from Ø6 to Ø29.5 mm (with an optional set of plugs), then six extended plates from Ø30 to Ø60 mm. Labels are a second filament in the multi-material 3MF.
 
-Sizes, print settings (including XY hole compensation at 0), the plug option, and plate previews are in [HoleGauges/README.md](HoleGauges/README.md).
+The 3MF files, the diameter table, and print settings (body on extruder 1, labels on extruder 4, XY hole compensation at 0, smallest holes at the bottom) are in [HoleGauges/README.md](HoleGauges/README.md).
 
 ## Requirements
 
