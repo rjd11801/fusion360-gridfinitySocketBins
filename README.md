@@ -1,8 +1,15 @@
 # fusion360-gridfinitySocketBins
 
-Fusion 360 scripts that turn a spreadsheet of your sockets into Gridfinity socket bins: round pockets, flush size labels, and optional colored pocket floors.
+Fusion 360 scripts that turn a spreadsheet of your sockets into Gridfinity socket bins: round pockets, flush size labels, and optional colored pocket floors. Printable [hole sizing gauges](HoleGauges/README.md) measure the snug diameter to enter in that spreadsheet.
 
 **Author:** Roland Diaz (GitHub [@rjd11801](https://github.com/rjd11801))
+
+## Contents
+
+- [SocketBin and SocketBinHoles](#which-script-to-use) — Fusion scripts that build a bin, or cut holes into a bin you already have.
+- [Hole sizing gauges](HoleGauges/README.md) — 3D-printable plates, Ø6–60 mm in 0.5 mm steps, for measuring the diameter that goes in the sockets file.
+- [Sockets file](#sockets-file) — spreadsheet columns the scripts read.
+- [Install](#install) — Windows installer, macOS installer, or Utilities > Scripts and Add-Ins > +.
 
 ## Which script to use
 
@@ -20,11 +27,17 @@ Use **SocketBin** when you want a complete bin generated in a new design. Use **
 
 Each package also has a short `START HERE.txt`.
 
+## Hole sizing gauges
+
+Print a gauge, drop the socket (or a bit or dowel) into the holes, and use the snug diameter as `hole_diameter_mm`. The plates are 206 × 206 × 10 mm and cover Ø6–60 mm in 0.5 mm steps: one v12 plate from Ø6 to Ø29.5 mm (with an optional set of plugs), then six extended plates from Ø30 to Ø60 mm. Labels are a second filament in the multi-material 3MF.
+
+Sizes, print settings (including XY hole compensation at 0), the plug option, and plate previews are in [HoleGauges/README.md](HoleGauges/README.md).
+
 ## Requirements
 
 - [Autodesk Fusion 360](https://www.autodesk.com/products/fusion-360/) on Windows or macOS. The scripts run in Fusion's own Python, so you do not install Python or extra packages, and the installers do not need administrator rights.
 - A 3D printer that can print a 42 mm Gridfinity bin. A multi-color (multi-filament) printer is optional: the label text and pocket-floor disks are separate from the bin body, so a multi-color printer can print them in a second color, and a single-color printer prints everything in one color.
-- A sockets list as `.xlsx` or `.csv`. Starter templates and example lists are in each package's `Starter Files` folder. Example sizes are placeholders; measure your own sockets.
+- A sockets list as `.xlsx` or `.csv`. Starter templates and example lists are in each package's `Starter Files` folder. Example sizes are placeholders. Measure your own sockets, or print the [hole sizing gauges](HoleGauges/README.md) and enter the snug hole.
 
 ## Install
 
@@ -69,7 +82,7 @@ The first row is a header. Column names are not case sensitive; use underscores 
 | Column | Required | Meaning |
 |---|---|---|
 | `label` | yes | Text in front of the pocket, such as `10`, `5/16`, or `3/8`. Keep it short (about 4 characters). |
-| `hole_diameter_mm` | yes | Pocket diameter. Also accepted: `diameter`, `hole_diameter`, `diameter_mm`. Measure the socket's widest outside diameter and add about 0.4–0.6 mm clearance. |
+| `hole_diameter_mm` | yes | Pocket diameter. Also accepted: `diameter`, `hole_diameter`, `diameter_mm`. Measure the socket's widest outside diameter and add about 0.4–0.6 mm clearance, or enter the snug hole from a [hole sizing gauge](HoleGauges/README.md). |
 | `hole_depth_mm` | yes | Pocket depth. Also accepted: `depth`, `hole_depth`, `depth_mm`. |
 | `row` | no | Row number. `1` is the front row. Leave blank to let the script pack the row. Also accepted: `row_hint`. |
 
