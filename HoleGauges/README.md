@@ -18,7 +18,7 @@ Every plate is **206 × 206 × 10 mm**. Holes step by **0.5 mm**. Labels are bla
 
 Together the plates cover **Ø6–60 mm** in 0.5 mm steps (48 holes on v12, then 61 holes across the six extended plates).
 
-**v12** uses straight ascending rows, smallest holes at the bottom. `hole_gauge_v12.step` is the same plate for Fusion. Build notes for an earlier 266 mm v8 plate are in [`v12/NOTES.md`](v12/NOTES.md); the files next to that note are the 206 mm v12 models.
+**v12** uses straight ascending rows, smallest holes at the bottom. `hole_gauge_v12.step` is the same plate for Fusion. Hole layout, plugs, and print notes are in [`v12/NOTES.md`](v12/NOTES.md).
 
 **Extended plates** have no plugs. Each folder entry also includes a `.step`, a body `.stl`, a labels `.stl`, and a preview `.png`. Row counts come from fitting the holes on the 206 mm plate, so later plates have fewer, larger holes.
 
